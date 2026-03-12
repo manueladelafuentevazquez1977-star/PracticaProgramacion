@@ -1,0 +1,104 @@
+package pertenece;
+
+import java.awt.Button;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class ConsultaPertenece extends WindowAdapter implements ActionListener
+{
+    Frame ventana = new Frame("Consulta");
+    TextArea txaDepartamentos = new TextArea(7, 24);
+    Button btnActualizar = new Button("Actualizar");
+    
+    String driver = "com.mysql.cj.jdbc.Driver";
+    String url = "jdbc:mysql://localhost:3306/ejercicioPractica2PR";
+    String login = "adminPractica";
+    String password = "admin";
+    String sentenciaSQL = "SELECT p.idPertenece, p.idSateliteFK, s.nombreSatelite, p.idPaisFK, pa.nombrePais " +
+                         "FROM pertenece p JOIN satelites s ON p.idSateliteFK = s.idSatelite " +
+                         "JOIN paises pa ON p.idPaisFK = pa.idPais";
+    
+    Connection connection = null;
+    Statement statement = null;
+    ResultSet rs = null;
+
+    public ConsultaPertenece()
+    {
+        ventana.setLayout(new FlowLayout());
+        ventana.setSize(400, 250);
+        ventana.addWindowListener(this);
+        btnActualizar.addActionListener(this);
+        ventana.add(txaDepartamentos);
+        ventana.add(btnActualizar);
+        ventana.setResizable(false);
+        ventana.setLocationRelativeTo(null);
+        ventana.setVisible(true);
+    }
+
+    public static void main(String[] args)
+    {
+        new ConsultaPertenece();
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e)
+    {
+        System.exit(0);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent evento)
+    {
+        try
+        {
+            Class.forName(driver);
+            connection = DriverManager.getConnection(url, login, password);
+            System.out.println("Conexión establecida");
+
+            statement = connection.createStatement();
+            rs = statement.executeQuery(sentenciaSQL);
+
+            txaDepartamentos.setText("");
+
+            while (rs.next())
+            {
+                txaDepartamentos.append(rs.getInt("idPertenece") +
+                                      " Satélite:" + rs.getInt("idSateliteFK") + "(" + rs.getString("nombreSatelite") + ") " +
+                                      "País:" + rs.getInt("idPaisFK") + "(" + rs.getString("nombrePais") + ")\n");
+            }
+        }
+        catch (ClassNotFoundException cnfe)
+        {
+            System.err.println("Error de driver");
+        }
+        catch (SQLException se)
+        {
+            System.err.println("Error de conexión: url, usuario o clave");
+        }
+        finally
+        {
+            try
+            {
+                if (connection != null)
+                {
+                    connection.close();
+                }
+            }
+            catch (SQLException e)
+            {
+                System.err.println("Error al cerrar conexión");
+            }
+            System.out.println("Fin del programa");
+        }
+    }
+}
