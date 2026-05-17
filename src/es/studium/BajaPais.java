@@ -237,13 +237,6 @@ public class BajaPais extends WindowAdapter implements ActionListener
 
 	}
 
-	public static void main(String[] args)
-
-	{
-
-		new BajaPais();
-
-	}
 
 	@Override
 
@@ -279,7 +272,7 @@ public class BajaPais extends WindowAdapter implements ActionListener
 
 			// Salir
 
-			System.exit(0);
+			ventana.setVisible(false);
 
 		}
 

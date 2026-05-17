@@ -43,15 +43,11 @@ public class ConsultaPais extends WindowAdapter implements ActionListener
         ventana.setVisible(true);
     }
 
-    public static void main(String[] args)
-    {
-        new ConsultaPais();
-    }
 
     @Override
     public void windowClosing(WindowEvent e)
     {
-        System.exit(0);
+        ventana.setVisible(false);
     }
 
     @Override

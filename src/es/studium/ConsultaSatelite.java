@@ -24,7 +24,10 @@ public class ConsultaSatelite extends WindowAdapter implements ActionListener
    	String url = "jdbc:mysql://localhost:3306/ejerciciopracticapro";
    	String login = "usuarioPractica";
    	String password = "basico";
-    String sentenciaSQL = "SELECT * FROM satelites";
+   	String sentenciaSQL = "SELECT nombreSatelite, tipoSatelite, fechaLanzamientoSatelite, nombrePais " +
+            "FROM satelites " +
+            "JOIN pertenece  ON idSatelite = idSateliteFK " +
+            "JOIN paises  ON idPaisFK = idPais";
     
     Connection connection = null;
     Statement statement = null;
@@ -43,15 +46,11 @@ public class ConsultaSatelite extends WindowAdapter implements ActionListener
         ventana.setVisible(true);
     }
 
-    public static void main(String[] args)
-    {
-        new ConsultaSatelite();
-    }
-
+  
     @Override
     public void windowClosing(WindowEvent e)
     {
-        System.exit(0);
+    	ventana.setVisible(false);
     }
 
     @Override
@@ -68,12 +67,15 @@ public class ConsultaSatelite extends WindowAdapter implements ActionListener
 
             txaDepartamentos.setText("");
 
+        
             while (rs.next())
             {
-                txaDepartamentos.append(rs.getInt("idSatelite") +
-                                      " " + rs.getString("nombreSatelite") +
-                                      " " + rs.getString("tipoSatelite") +
-                                      " " + rs.getString("fechaLanzamientoSatelite") + "\n");
+            	txaDepartamentos.append(
+            			rs.getString("nombreSatelite") + " | " + 
+            					rs.getString("tipoSatelite") + " | " + 
+            					rs.getString("fechaLanzamientoSatelite") + " | " + 
+            					rs.getString("nombrePais") + "" 
+            			);
             }
         }
         catch (ClassNotFoundException cnfe)

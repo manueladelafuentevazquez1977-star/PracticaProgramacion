@@ -21,11 +21,11 @@ public class ModificacionAstronauta extends WindowAdapter implements ActionListe
 {
     Frame ventana = new Frame("Modificación");
 
-    Choice choDepartamentos = new Choice();
+    Choice choAstronauta = new Choice();
     Button btnEditar = new Button("Editar");
 
     Dialog dlgEdicion = new Dialog(ventana, "Editando...", true);
-    Label lblDepartamento = new Label("# # # Editando el Astronauta X # # #");
+    Label lblAstronauta = new Label("# # # Editando el Astronauta X # # #");
 
     Label lblNombre = new Label("Nombre:");
     TextField txtNombre = new TextField(10);
@@ -69,7 +69,7 @@ public class ModificacionAstronauta extends WindowAdapter implements ActionListe
 
         rellenarChoice();
 
-        ventana.add(choDepartamentos);
+        ventana.add(choAstronauta);
         ventana.add(btnEditar);
         ventana.setResizable(false);
         ventana.setLocationRelativeTo(null);
@@ -87,7 +87,7 @@ public class ModificacionAstronauta extends WindowAdapter implements ActionListe
         btnAceptar.addActionListener(this);
         btnLimpiar.addActionListener(this);
 
-        dlgEdicion.add(lblDepartamento);
+        dlgEdicion.add(lblAstronauta);
         dlgEdicion.add(lblNombre);
         dlgEdicion.add(txtNombre);
         dlgEdicion.add(lblApellidos);
@@ -118,11 +118,11 @@ public class ModificacionAstronauta extends WindowAdapter implements ActionListe
             statement = connection.createStatement();
             rs = statement.executeQuery(sentenciaSQL);
 
-            choDepartamentos.add("Seleccionar un astronauta...");
+            choAstronauta.add("Seleccionar un astronauta...");
 
             while (rs.next())
             {
-                choDepartamentos.add(rs.getInt("idAstronauta") +
+                choAstronauta.add(rs.getInt("idAstronauta") +
                                    " " + rs.getString("nombreAstronauta") +
                                    " " + rs.getString("apellidosAstronauta"));
             }
@@ -152,10 +152,7 @@ public class ModificacionAstronauta extends WindowAdapter implements ActionListe
         }
     }
 
-    public static void main(String[] args)
-    {
-        new ModificacionAstronauta();
-    }
+
 
     @Override
     public void windowClosing(WindowEvent e)
@@ -172,7 +169,7 @@ public class ModificacionAstronauta extends WindowAdapter implements ActionListe
         }
         else
         {
-            System.exit(0);
+        	ventana.setVisible(false);
         }
     }
 
@@ -181,12 +178,12 @@ public class ModificacionAstronauta extends WindowAdapter implements ActionListe
     {
         if (evento.getSource().equals(btnEditar))
         {
-            if (choDepartamentos.getSelectedIndex() != 0)
+            if (choAstronauta.getSelectedIndex() != 0)
             {
-                idAstronauta = choDepartamentos.getSelectedItem().split(" ")[0];
+                idAstronauta = choAstronauta.getSelectedItem().split(" ")[0];
                 sentenciaSQL = "SELECT * FROM astronautas WHERE idAstronauta = " + idAstronauta;
 
-                lblDepartamento.setText("# # # Editando el Astronauta " + idAstronauta + " # # #");
+                lblAstronauta.setText("# # # Editando el Astronauta " + idAstronauta + " # # #");
 
                 try
                 {
@@ -234,7 +231,7 @@ public class ModificacionAstronauta extends WindowAdapter implements ActionListe
             }
             else
             {
-                choDepartamentos.requestFocus();
+                choAstronauta.requestFocus();
             }
         }
         else if (evento.getSource().equals(btnAceptar))

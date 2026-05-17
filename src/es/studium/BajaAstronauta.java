@@ -21,12 +21,13 @@ public class BajaAstronauta extends WindowAdapter implements ActionListener
 {
     Frame ventana = new Frame("Baja Astronauta");
     
-    Choice choAstronautas = new Choice();  // ← CAMBIADO
+    Choice choAstronautas = new Choice();  
     Button btnEliminar = new Button("Eliminar");
 
     Dialog dlgConfirmar = new Dialog(ventana, "Confirmación", true);
     Label lblConfirmar = new Label("¿Estás segur@ de borrar XXXXXXXXXXXX?");
     
+    // para organizar cajones
     Panel arriba = new Panel();
     Panel abajo = new Panel();
     Button btnSi = new Button("Sí");
@@ -48,14 +49,14 @@ public class BajaAstronauta extends WindowAdapter implements ActionListener
     public BajaAstronauta()
     {
         ventana.setLayout(new FlowLayout());
-        ventana.setSize(300, 120);  // ← Un poco más grande
+        ventana.setSize(300, 120);  //
         ventana.addWindowListener(this);
         btnEliminar.addActionListener(this);
 
-        // Rellenar el Choice
+        // para usar una sola opcion 
         rellenarChoice();
-
-        ventana.add(choAstronautas);  // ← CAMBIADO
+// el cho-... se pone para saber que hay dentro de esa caja 
+        ventana.add(choAstronautas);  
         ventana.add(btnEliminar);
         ventana.setResizable(false);
         ventana.setLocationRelativeTo(null);
@@ -99,14 +100,14 @@ public class BajaAstronauta extends WindowAdapter implements ActionListener
 			sentenciaSQL = "SELECT * FROM astronautas";
             rs = statement.executeQuery(sentenciaSQL);
 
-            choAstronautas.add("Seleccionar un astronauta...");  // ← CAMBIADO
+            choAstronautas.add("Seleccionar un astronauta..."); 
             
-            while (rs.next())  // ← SOLO UN while
+            while (rs.next())  
             {
-                choAstronautas.add(  // ← CAMBIADO
+                choAstronautas.add(  // Guardamos el ID al principio para saber luego a quién borrar
                     rs.getInt("idAstronauta") + " " +
                     rs.getString("nombreAstronauta") + " " +
-                    rs.getString("apellidosAstronauta") + " " +  // ← CORREGIDO: apellidosAstronauta
+                    rs.getString("apellidosAstronauta") + " " +  
                     rs.getString("fechaNacimientoAstronauta"));
             }
         }
@@ -136,10 +137,7 @@ public class BajaAstronauta extends WindowAdapter implements ActionListener
         }
     }
 
-    public static void main(String[] args)
-    {
-        new BajaAstronauta();
-    }
+  
 
     @Override
     public void windowClosing(WindowEvent e)
@@ -157,7 +155,7 @@ public class BajaAstronauta extends WindowAdapter implements ActionListener
         }
         else
         {
-            System.exit(0);
+        	ventana.setVisible(false);
         }
     }
 
@@ -166,15 +164,15 @@ public class BajaAstronauta extends WindowAdapter implements ActionListener
     {
         if (evento.getSource().equals(btnEliminar))
         {
-            if (choAstronautas.getSelectedIndex() != 0)  // ← CAMBIADO
+            if (choAstronautas.getSelectedIndex() != 0)  
             {
-                lblConfirmar.setText("¿Estás segur@ de borrar " + choAstronautas.getSelectedItem() + "?");  // ← CAMBIADO
+                lblConfirmar.setText("¿Estás segur@ de borrar " + choAstronautas.getSelectedItem() + "?"); 
                 dlgConfirmar.setVisible(true);
                 ventana.dispose();
             }
             else
             {
-                choAstronautas.requestFocus();  // ← CAMBIADO
+                choAstronautas.requestFocus();  
             }
         }
         else if (evento.getSource().equals(btnSi))
@@ -188,7 +186,7 @@ public class BajaAstronauta extends WindowAdapter implements ActionListener
                 statement = connection.createStatement();
 
                 sentenciaSQL = "DELETE FROM astronautas WHERE idAstronauta = " + 
-                              choAstronautas.getSelectedItem().split(" ")[0];  // ← CAMBIADO
+                              choAstronautas.getSelectedItem().split(" ")[0]; 
                 
                 statement.executeUpdate(sentenciaSQL);
                 rellenarChoice();
@@ -203,7 +201,7 @@ public class BajaAstronauta extends WindowAdapter implements ActionListener
             }
             catch (SQLException se)
             {
-                lblMensaje.setText("Error en Baja");  // ← CORREGIDO
+                lblMensaje.setText("Error en Baja");  
                 dlgMensaje.setVisible(true);
             }
             finally

@@ -84,10 +84,7 @@ public class AltaAstronauta extends WindowAdapter implements ActionListener
 		ventana.setVisible(true);
 	}
 
-	public static void main(String[] args)
-	{
-		new AltaAstronauta();
-	}
+	
 
 	@Override
 	public void windowClosing(WindowEvent e)
@@ -97,7 +94,7 @@ public class AltaAstronauta extends WindowAdapter implements ActionListener
 			dlgMensaje.setVisible(false);
 		} else
 		{
-			System.exit(0);
+			ventana.setVisible(false);
 		}
 	}
 

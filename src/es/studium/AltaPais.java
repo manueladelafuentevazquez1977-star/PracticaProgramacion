@@ -28,13 +28,10 @@ import java.sql.SQLException;
 
 import java.sql.Statement;
 
-// cambiar los datos por la tabla de PAISES (IGUAL CON LOS DEMAS S, A)
-//Ya esta la url puesta bien.
-//
 public class AltaPais extends WindowAdapter implements ActionListener
 
 {
-
+ // TextField y Label para las etiquetas y escribir los nombres
 	Frame ventana = new Frame("Alta");
 
 	Label lblNombre = new Label("Nombre:");
@@ -48,30 +45,33 @@ public class AltaPais extends WindowAdapter implements ActionListener
 	Label lblCapital = new Label("Capital:");
 
 	TextField txtCapital = new TextField(10);
-
+	
+//Para añadir los botones 
 	Button btnAceptar = new Button("Aceptar");
 
 	Button btnLimpiar = new Button("Limpiar");
 
+	//Con esto conectamos la base de datos.
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/ejerciciopracticapro";
 	String login = "usuarioPractica";
 	String password = "basico";
 
+	// para escribir algo luego
 	String sentenciaSQL = "";
 
 	Connection connection = null;
 
-	Statement statement = null;
+	Statement statement = null; // para procesar la cadena 
 
-	Dialog dlgMensaje = new Dialog(ventana, "Respuesta", true);
+	Dialog dlgMensaje = new Dialog(ventana, "Respuesta", true); // ventana emergente
 
 	Label lblMensaje = new Label("Error en Alta");
 
 	public AltaPais()
 
 	{
-
+		// Ventanas y Botones 
 		ventana.setLayout(new FlowLayout());
 
 		ventana.setSize(250, 180);
@@ -102,6 +102,7 @@ public class AltaPais extends WindowAdapter implements ActionListener
 
 		ventana.setLocationRelativeTo(null);
 
+		// para configurar la ventana emergente
 		dlgMensaje.setLayout(new FlowLayout());
 
 		dlgMensaje.setSize(50, 80);
@@ -118,13 +119,7 @@ public class AltaPais extends WindowAdapter implements ActionListener
 
 	}
 
-	public static void main(String[] args)
 
-	{
-
-		new AltaPais();
-
-	}
 
 	@Override
 
@@ -146,7 +141,7 @@ public class AltaPais extends WindowAdapter implements ActionListener
 
 			// Salir
 
-			System.exit(0);
+			ventana.setVisible(false);
 
 		}
 

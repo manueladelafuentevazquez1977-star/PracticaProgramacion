@@ -71,7 +71,7 @@ public class Login extends WindowAdapter implements ActionListener
 			dlgDialogo.setVisible(false);
 		} else
 		{
-			System.exit(0);
+			ventana.setVisible(false);
 		}
 	}
 
@@ -96,16 +96,16 @@ public class Login extends WindowAdapter implements ActionListener
 			System.out.println(respuesta);
 			
 			gestionBD.desconectar(conexion);
-			if (respuesta == 0)
+			if (respuesta == 1)
 			{
 				System.out.println("Tipo 0: Administrador");
 				ventana.dispose();
-				new Principal(respuesta);
-			} else if (respuesta == 1)
+				new MenuPrincipal(respuesta);
+			} else if (respuesta == 2)
 			{
 				System.out.println("Tipo 1: Básico");
 				ventana.dispose();
-				new Principal(respuesta);
+				new MenuPrincipal(respuesta);
 			} else
 			{
 				dlgDialogo.setVisible(true);

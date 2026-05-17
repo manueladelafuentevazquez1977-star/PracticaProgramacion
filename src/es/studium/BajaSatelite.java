@@ -235,13 +235,6 @@ public class BajaSatelite extends WindowAdapter implements ActionListener
 
 	}
 
-	public static void main(String[] args)
-
-	{
-
-		new BajaSatelite();
-
-	}
 
 	@Override
 
@@ -277,7 +270,7 @@ public class BajaSatelite extends WindowAdapter implements ActionListener
 
 			// Salir
 
-			System.exit(0);
+			ventana.setVisible(false);
 
 		}
 

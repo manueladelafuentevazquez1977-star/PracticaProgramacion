@@ -17,14 +17,16 @@ import java.sql.Statement;
 public class ConsultaAstronauta extends WindowAdapter implements ActionListener
 {
     Frame ventana = new Frame("Consulta");
-    TextArea txaDepartamentos = new TextArea(7, 24);
+    TextArea txaDepartamentos = new TextArea(7, 24); // 7 filas y 24 carácteres 
     Button btnActualizar = new Button("Actualizar");
-    
+    //url
     String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/ejerciciopracticapro";
 	String login = "usuarioPractica";
 	String password = "basico";
-    String sentenciaSQL = "SELECT * FROM astronautas";
+	String sentenciaSQL = "SELECT nombreAstronauta, apellidosAstronauta, agnosExperienciaAstronauta, nombrePais " + 
+            "FROM astronautas " +
+            "JOIN paises ON idPaisFK = idPais;";
     
     Connection connection = null;
     Statement statement = null;
@@ -43,15 +45,11 @@ public class ConsultaAstronauta extends WindowAdapter implements ActionListener
         ventana.setVisible(true);
     }
 
-    public static void main(String[] args)
-    {
-        new ConsultaAstronauta();
-    }
-
+    
     @Override
     public void windowClosing(WindowEvent e)
     {
-        System.exit(0);
+    	ventana.setVisible(false);
     }
 
     @Override
@@ -70,10 +68,13 @@ public class ConsultaAstronauta extends WindowAdapter implements ActionListener
 
             while (rs.next())
             {
-                txaDepartamentos.append(rs.getInt("idAstronauta") +
-                                      " " + rs.getString("nombreAstronauta") +
-                                      " " + rs.getString("apellidosAstronauta") +
-                                      " " + rs.getString("fechaNacimientoAstronauta") + "\n");
+                txaDepartamentos.append(
+                    rs.getInt("idAstronauta") + " " +
+                    rs.getString("nombreAstronauta") + " " + 
+                    rs.getString("apellidosAstronauta") + " - Exp: " +
+                    rs.getString("agnosExperienciaAstronauta") + " - País: " + 
+                    rs.getString("nombrePais") + " " 
+                );
             }
         }
         catch (ClassNotFoundException cnfe)

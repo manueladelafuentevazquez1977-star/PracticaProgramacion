@@ -115,13 +115,7 @@ public class AltaSatelite extends WindowAdapter implements ActionListener
 
 	}
 
-	public static void main(String[] args)
 
-	{
-
-		new AltaSatelite();
-
-	}
 
 	@Override
 
@@ -143,7 +137,7 @@ public class AltaSatelite extends WindowAdapter implements ActionListener
 
 			// Salir
 
-			System.exit(0);
+			ventana.setVisible(false);
 
 		}
 

@@ -138,10 +138,6 @@ public class ModificacionPais extends WindowAdapter implements ActionListener
 		}
 	}
 
-	public static void main(String[] args)
-	{
-		new ModificacionPais();
-	}
 
 	@Override
 	public void windowClosing(WindowEvent e)
@@ -156,7 +152,7 @@ public class ModificacionPais extends WindowAdapter implements ActionListener
 			new ModificacionPais();
 		} else
 		{
-			System.exit(0);
+			ventana.setVisible(false);
 		}
 	}
 
